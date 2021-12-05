@@ -9,6 +9,8 @@
 <body>
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
+        const GSHEET_ID = '1IzcYcEpF5L-NUqmBHbSexMDlyFJN8QmiD5BgPuNR2IM';
+
         /**
          * Sample JavaScript code for sheets.spreadsheets.get
          * See instructions for running APIs Explorer code samples locally:
@@ -41,26 +43,11 @@
         // Make sure the client is loaded and sign-in is complete before calling this method.
         function execute() {
             return gapi.client.sheets.spreadsheets.get({
-                    "spreadsheetId": "1IzcYcEpF5L-NUqmBHbSexMDlyFJN8QmiD5BgPuNR2IM",
+                    "spreadsheetId": GSHEET_ID,
+                    "includeGridData": false,
                     "ranges": [
                         "A1:C5"
-                    ],
-                    "requests": [{
-                        "addSheet": {
-                            "properties": {
-                                "title": "Deposits",
-                                "gridProperties": {
-                                    "rowCount": 20,
-                                    "columnCount": 12
-                                },
-                                "tabColor": {
-                                    "red": 1.0,
-                                    "green": 0.3,
-                                    "blue": 0.4
-                                }
-                            }
-                        }
-                    }]
+                    ]
                 })
                 .then(function(response) {
                         // Handle the results here (response.result has the parsed body).
@@ -75,6 +62,34 @@
                 client_id: "225611456534-85434pqc190l037d06n2gpqtujnkvtc1.apps.googleusercontent.com"
             });
         });
+
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${GSHEET_ID}:batchUpdate`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                //update this token with yours. 
+                Authorization: `Bearer ${ACCESS_TOKEN}`,
+            },
+            body: JSON.stringify({
+
+                "requests": [{
+                    "addSheet": {
+                        "properties": {
+                            "title": "Test",
+                            "gridProperties": {
+                                "rowCount": 20,
+                                "columnCount": 12
+                            },
+                            "tabColor": {
+                                "red": 1.0,
+                                "green": 0.3,
+                                "blue": 0.4
+                            }
+                        }
+                    }
+                }]
+            })
+        })
     </script>
     <button onclick="authenticate().then(loadClient)">authorize and load</button>
     <button onclick="execute()">execute</button>
