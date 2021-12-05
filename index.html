@@ -44,7 +44,23 @@
                     "spreadsheetId": "1IzcYcEpF5L-NUqmBHbSexMDlyFJN8QmiD5BgPuNR2IM",
                     "ranges": [
                         "A1:C5"
-                    ]
+                    ],
+                    "requests": [{
+                        "addSheet": {
+                            "properties": {
+                                "title": "Deposits",
+                                "gridProperties": {
+                                    "rowCount": 20,
+                                    "columnCount": 12
+                                },
+                                "tabColor": {
+                                    "red": 1.0,
+                                    "green": 0.3,
+                                    "blue": 0.4
+                                }
+                            }
+                        }
+                    }]
                 })
                 .then(function(response) {
                         // Handle the results here (response.result has the parsed body).
